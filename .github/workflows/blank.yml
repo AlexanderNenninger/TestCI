@@ -24,11 +24,13 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
+        with: 
+          ref: ${{ github.ref }}
+      
       - name: Configure Git
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.github.com"
-          git checkout $GITHUB_REF
         
       # Runs a single command using the runners shell
       - name: Update File
