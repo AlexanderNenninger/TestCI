@@ -24,16 +24,22 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
+      - name: Configure Git
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.github.com"
+        
+      # Runs a single command using the runners shell
+      - name: Update File
+        run: |
+          date +"%Y%m%d-%H%M%S" >>main-times.txt
+          git add -f main-times.txt
+    
+      - name: Commit File
+        run: |
           git commit --allow-empty -m "Hello world!" -m "skip-checks: True"
           git push
         
-
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
